@@ -14,13 +14,19 @@ use Mix.Config
 config :unicorn, Unicorn.Endpoint,
   http: [port: {:system, "PORT"}],
   url: [host: "example.com", port: 80],
-  cache_static_manifest: "priv/static/manifest.json"
+  cache_static_manifest: "priv/static/manifest.json",
+  secret_key_base: "fkPXDC9eWSPuNUKS3dKTqJ8mlTNl4MyaIMeOZYTS47tf1G+vs5PmairzoVlAgiO8"
+
 
 # Database
 config :unicorn, Unicorn.Repo,
   adapter: Ecto.Adapters.Postgres,
   url: System.get_env("DATABASE_URL"),
+  username: System.get_env("DATABASE_USER"),
+  password: System.get_env("DATABASE_PASSWORD"),
+  database: System.get_env("DATABASE_NAME"),
   pool_size: 20
+
 
 # Do not print debug messages in production
 config :logger, level: :info
@@ -61,7 +67,3 @@ config :logger, level: :info
 #
 #     config :unicorn, Unicorn.Endpoint, server: true
 #
-
-# Finally import the config/prod.secret.exs
-# which should be versioned separately.
-import_config "prod.secret.exs"
