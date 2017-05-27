@@ -2,12 +2,12 @@ defmodule Unicorn.ServerController do
   use Unicorn.Web, :controller
 
   alias Unicorn.Server.{
-    CreateServerAction
+    CreateAction
   }
 
   def create(conn, params) do
 
-    result = CreateServerAction.run(params)
+    #result = CreateServerAction.run(params)
 
     # Return some static JSON for now
     conn
