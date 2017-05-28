@@ -8,6 +8,6 @@ defmodule Unicorn.Router do
   scope "/", Unicorn do
     pipe_through :api
 
-    get "/servers/create", ServerController, :create
+    post "/servers", ServerController, :create
   end
 end
