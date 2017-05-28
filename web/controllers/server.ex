@@ -1,16 +1,27 @@
 defmodule Unicorn.ServerController do
   use Unicorn.Web, :controller
 
+  alias Unicorn.{
+    ServerSerializer
+  }
+
   alias Unicorn.Server.{
     CreateAction
   }
 
-  def create(conn, params) do
+  def create(conn, _params) do
 
-    #result = CreateServerAction.run(params)
+    case CreateAction.run() do
+      {:ok, result} ->
+        conn
+        |> put_status(:created)
+        |> render("show.json-api", data: result.model)
 
-    # Return some static JSON for now
-    conn
-    |> json(%{status: "Ok"})
+      {:error, :save, result} ->
+        conn
+        |> put_status(:unprocessable_entity)
+        |> render(:errors, data: result.changeset)
+    end
+
   end
 end

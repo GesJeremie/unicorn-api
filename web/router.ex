@@ -2,11 +2,12 @@ defmodule Unicorn.Router do
   use Unicorn.Web, :router
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug :accepts, ["json-api"]
   end
 
-  scope "/api", Unicorn do
+  scope "/", Unicorn do
     pipe_through :api
-    resources "session", SessionController, only: [:index]
+
+    get "/servers/create", ServerController, :create
   end
 end

@@ -1,11 +1,12 @@
 defmodule Unicorn.Server.CreateChangeset do
+  @moduledoc """
+  Contract when creating a server
+  """
   use Unicorn.Web, :changeset
 
   def cast(server, params \\ %{}) do
     server
-    # Error because not new version of ecto
-    # this is a new API introduced in the latest version
-    # I have to update.
+    |> cast(params, [:name, :token])
     |> validate_required([:name, :token])
     |> unique_constraint(:name)
   end

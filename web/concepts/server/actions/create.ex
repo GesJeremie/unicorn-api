@@ -1,4 +1,7 @@
 defmodule Unicorn.Server.CreateAction do
+  @moduledoc """
+  Action to create a server
+  """
   use Unicorn.Web, :action
 
   alias Unicorn.{
@@ -41,7 +44,8 @@ defmodule Unicorn.Server.CreateAction do
 
   defp save(params) do
     case CreateQuery.run(%{name: params[:unique_name]}) do
-      {:ok, _struct} ->
+      {:ok, model} ->
+        params = Map.merge(params, %{model: model})
         {:ok, params}
 
       {:error, changeset} ->
