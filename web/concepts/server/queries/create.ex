@@ -5,17 +5,17 @@ defmodule Unicorn.Server.CreateQuery do
   use Unicorn.Web, :query
 
   alias Unicorn.Server.{
-    CreateChangeset
+    CreateContract
   }
 
   def run(params) do
-    changeset = changeset(params)
-
-    Repo.insert(changeset)
+    params
+    |> contract
+    |> Repo.insert
   end
 
-  def changeset(params) do
-    CreateChangeset.cast(%Unicorn.ServerModel{}, %{
+  def contract(params) do
+    CreateContract.make(%{
       name: params[:name],
       token: Ecto.UUID.generate
     })

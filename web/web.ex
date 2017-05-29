@@ -20,7 +20,14 @@ defmodule Unicorn.Web do
     end  
   end
 
-  def changeset do
+  def contract do
+    quote do
+      use Ecto.Schema
+      import Ecto.Changeset
+    end
+  end
+
+  def validation do
     quote do
       use Ecto.Schema
       import Ecto.Changeset

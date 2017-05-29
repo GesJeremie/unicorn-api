@@ -48,8 +48,8 @@ defmodule Unicorn.Server.CreateAction do
         params = Map.merge(params, %{model: model})
         {:ok, params}
 
-      {:error, changeset} ->
-        params = Map.merge(params, %{changeset: changeset})
+      {:error, contract} ->
+        params = Map.merge(params, %{contract: contract})
         {:error, :save, params}
     end
   end

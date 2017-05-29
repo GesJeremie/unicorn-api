@@ -1,11 +1,11 @@
-defmodule Unicorn.Server.CreateChangeset do
+defmodule Unicorn.Server.CreateContract do
   @moduledoc """
   Contract when creating a server
   """
-  use Unicorn.Web, :changeset
+  use Unicorn.Web, :contract
 
-  def cast(server, params \\ %{}) do
-    server
+  def make(params \\ %{}) do
+    %Unicorn.ServerModel{}
     |> cast(params, [:name, :token])
     |> validate_required([:name, :token])
     |> unique_constraint(:name)

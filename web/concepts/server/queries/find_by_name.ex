@@ -1,6 +1,6 @@
-defmodule Unicorn.Server.NameExistsQuery do
+defmodule Unicorn.Server.FindByNameQuery do
   @moduledoc """
-  Query to check if a server name already exists
+  Query to find a server by name
   """
   use Unicorn.Web, :query
 
@@ -8,21 +8,11 @@ defmodule Unicorn.Server.NameExistsQuery do
     params
     |> query
     |> Repo.one
-    |> count
   end
 
   defp query(params) do
     from server in Unicorn.ServerModel,
-      select: count(server.id),
       where: server.name == ^params[:name]
-  end
-
-  defp count(0) do
-    false
-  end
-
-  defp count(1) do
-    true
   end
 
 end

@@ -20,7 +20,7 @@ defmodule Unicorn.ServerController do
       {:error, :save, result} ->
         conn
         |> put_status(:unprocessable_entity)
-        |> render(:errors, data: result.changeset)
+        |> render(:errors, data: result.contract)
     end
 
   end
