@@ -11,6 +11,7 @@ defmodule Unicorn.Server.FindByNameQuery do
   end
 
   defp query(params) do
+    IO.inspect(params)
     from server in Unicorn.ServerModel,
       where: server.name == ^params[:name]
   end

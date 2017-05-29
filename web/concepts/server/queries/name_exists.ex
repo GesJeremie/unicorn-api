@@ -11,7 +11,7 @@ defmodule Unicorn.Server.NameExistsQuery do
     |> count
   end
 
-  defp query(params) do
+  defp query(params) do    
     from server in Unicorn.ServerModel,
       select: count(server.id),
       where: server.name == ^params[:name]

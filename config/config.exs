@@ -13,7 +13,7 @@ config :unicorn,
 config :unicorn, Unicorn.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "edMv7dv+4HyUNhVg/4krVYOexd9Pd+bJgMqERNwrF3qHYv80WNSSsGiVPk6L2Rel",
-  render_errors: [view: Unicorn.ErrorView, accepts: ~w(json)],
+  render_errors: [view: Unicorn.ErrorView, accepts: ~w(json json-api)],
   pubsub: [name: Unicorn.PubSub,
            adapter: Phoenix.PubSub.PG2]
 

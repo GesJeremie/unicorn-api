@@ -8,7 +8,7 @@ defmodule Unicorn.Server.ShowValidation do
     field :name, :string
   end
 
-  def make(params \\ %{}) do
+  def make(params) do
     validation = do_validation(params)
 
     if validation.valid? do
