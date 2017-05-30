@@ -2,7 +2,7 @@ defmodule Unicorn.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", Unicorn.RoomChannel
+  channel "room:*", Unicorn.RoomChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
