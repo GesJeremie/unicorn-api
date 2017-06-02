@@ -1,8 +1,8 @@
-defmodule Unicorn.UserSocket do
+defmodule Unicorn.RouterSocket do
   use Phoenix.Socket
 
   ## Channels
-  channel "room:*", Unicorn.RoomChannel
+  channel "unicorn:*", Unicorn.UnicornChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket

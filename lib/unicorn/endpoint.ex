@@ -1,7 +1,7 @@
 defmodule Unicorn.Endpoint do
   use Phoenix.Endpoint, otp_app: :unicorn
 
-  socket "/socket", Unicorn.UserSocket
+  socket "/socket", Unicorn.RouterSocket
 
   # Serve at "/" the static files from "priv/static" directory.
   #

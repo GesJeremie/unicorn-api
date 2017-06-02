@@ -19,7 +19,7 @@ defmodule Unicorn.Mixfile do
   def application do
     [mod: {Unicorn, []},
      applications: [:phoenix, :phoenix_pubsub, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex]]
+                    :phoenix_ecto, :postgrex, :httpoison]]
   end
 
   # Specifies which paths to compile per environment.
@@ -38,7 +38,8 @@ defmodule Unicorn.Mixfile do
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:cors_plug, "~> 1.2"},
-      {:ja_serializer, "~> 0.12.0"}
+      {:ja_serializer, "~> 0.12.0"},
+      {:httpoison, "~> 0.11.1"}
     ]
   end
 

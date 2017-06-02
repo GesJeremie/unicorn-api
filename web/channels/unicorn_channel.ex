@@ -1,12 +1,8 @@
-defmodule Unicorn.RoomChannel do
+defmodule Unicorn.UnicornChannel do
   use Unicorn.Web, :channel
 
-  def join("room:lobby", _message, socket) do
+  def join("unicorn:" <> name, _params, socket) do
     {:ok, socket}
-  end
-  
-  def join("room:" <> _private_room_id, _params, _socket) do
-    {:error, %{reason: "unauthorized"}}
   end
 
   def handle_in("new_song", params, socket) do
