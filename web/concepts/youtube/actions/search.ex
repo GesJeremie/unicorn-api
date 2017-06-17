@@ -4,7 +4,9 @@ defmodule Unicorn.Youtube.SearchAction do
   """
   use Unicorn.Web, :action
 
-  alias Unicorn.Server.{}
+  alias Unicorn.Youtube.{
+    SearchValidation
+  }
 
   @doc """
   Run the action
@@ -39,15 +41,19 @@ defmodule Unicorn.Youtube.SearchAction do
   ## Errors 
 
   ```
+  # Inputs invalid
+  {:error, :validate, result}
+
   # Impossible to retrieve the results from youtube
-  {:error, :make_search, params} 
+  {:error, :make_search, result} 
 
   # Impossible to retrieve the duration results from youtube
-  {:error, :make_search_durations, params}
+  {:error, :make_search_durations, result}
   ```
   """
   def run(params) do
-    with {:ok, params} <- make_search(params),
+    with {:ok, params} <- validate(params),
+         {:ok, params} <- make_search(params),
          {:ok, params} <- build_songs(params),
          {:ok, params} <- make_search_durations(params),
          {:ok, params} <- assoc_duration_songs(params)
@@ -63,13 +69,23 @@ defmodule Unicorn.Youtube.SearchAction do
   # Pipeline
   ###
   
+  defp validate(params) do
+    case SearchValidation.make(params) do
+      {:ok, validation} ->
+        {:ok, params}
+      {:error, validation} ->
+        params = Map.merge(params, %{validation: validation})
+        {:error, :validate, params}
+    end
+  end
+
   ###
   # Retrieve the results of youtube for the query string given
   ###
   defp make_search(params) do
     request = HTTPoison.get "https://www.googleapis.com/youtube/v3/search", [], params: %{
       part: "snippet", 
-      q: "flight facilities",
+      q: params[:query],
       key: "AIzaSyB7T2tSvrpH_L-GF2wzu62e2sfezISNw_k",
       type: "video",
       videoCategoryId: 10, # Music
