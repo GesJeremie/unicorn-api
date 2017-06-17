@@ -151,7 +151,7 @@ defmodule Unicorn.Youtube.SearchAction do
           duration = get_duration(search_duration)
           song = Enum.at(params[:songs], index)
 
-          Enum.concat(song, %{duration: duration})
+          Map.merge(song, %{duration: duration})
          end)
 
     params = Map.merge(params, %{songs: songs})

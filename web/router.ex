@@ -10,5 +10,7 @@ defmodule Unicorn.Router do
 
     post "/servers", ServerController, :create
     get "/servers/:name", ServerController, :show
+
+    get "/songs", SongController, :index
   end
 end
