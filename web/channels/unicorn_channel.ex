@@ -6,9 +6,8 @@ defmodule Unicorn.UnicornChannel do
   end
 
   def handle_in("new_song", params, socket) do
-    IO.inspect params
     broadcast! socket, "new_song", params
-    {:noreply, socket}
+    {:reply, :ok, socket}
   end
 
   def handle_in("new_device", params, socket) do
