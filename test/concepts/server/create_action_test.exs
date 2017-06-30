@@ -1,4 +1,4 @@
-defmodule Unicorn.CreateActionTest do
+defmodule Unicorn.Server.CreateActionTest do
   use Unicorn.ConnCase, async: true
   alias Unicorn.Server.CreateAction
 
