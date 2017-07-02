@@ -2,7 +2,7 @@ defmodule Unicorn.ServerSong.CreateContract do
   @moduledoc """
   Contract when creating a server song
   """
-  use Unicorn.Web, :contract
+  use Unicorn.Concept, :contract
 
   def make(params \\ %{}) do
     %Unicorn.ServerSongModel{}

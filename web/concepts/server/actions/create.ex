@@ -2,7 +2,7 @@ defmodule Unicorn.Server.CreateAction do
   @moduledoc """
   Action to create a server
   """
-  use Unicorn.Web, :action
+  use Unicorn.Concept, :action
 
   alias Unicorn.{
     MemorableNameHelper

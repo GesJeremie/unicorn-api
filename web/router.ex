@@ -5,12 +5,9 @@ defmodule Unicorn.Router do
     plug :accepts, ["json-api"]
   end
 
-  scope "/", Unicorn do
+  scope "/v1", Unicorn do
     pipe_through :api
 
-    post "/servers", ServerController, :create
-    get "/servers/:name", ServerController, :show
-
-    get "/songs", SongController, :index
+    resources "/users", UserController, only: [:create, :show]
   end
 end

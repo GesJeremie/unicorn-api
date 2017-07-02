@@ -2,7 +2,8 @@ defmodule Unicorn.Youtube.SearchValidation do
   @moduledoc """
   Validation params of action search
   """
-  use Unicorn.Web, :validation
+  """
+  use Unicorn.Concept, :validation
 
   schema "validation_search" do
     field :query, :string
@@ -23,5 +24,6 @@ defmodule Unicorn.Youtube.SearchValidation do
     |> cast(params, [:query])
     |> validate_required([:query])
   end
+  """
 
 end

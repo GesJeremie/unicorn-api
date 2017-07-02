@@ -2,8 +2,8 @@ defmodule Unicorn.Youtube.SearchAction do
   @moduledoc """
   Action to search music videos on youtube
   """
-  use Unicorn.Web, :action
-
+  #use Unicorn.Concept, :action
+  
   alias Unicorn.Youtube.{
     SearchValidation
   }

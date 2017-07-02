@@ -15,33 +15,6 @@ defmodule Unicorn.Web do
   Do NOT define functions inside the quoted expressions
   below.
   """
-  def action do
-    quote do
-    end  
-  end
-
-  def contract do
-    quote do
-      use Ecto.Schema
-      import Ecto.Changeset
-    end
-  end
-
-  def validation do
-    quote do
-      use Ecto.Schema
-      import Ecto.Changeset
-    end
-  end
-
-  def query do
-    quote do
-      alias Unicorn.Repo
-      import Ecto
-      import Ecto.Query
-    end
-  end
-
   def model do
     quote do
       use Ecto.Schema

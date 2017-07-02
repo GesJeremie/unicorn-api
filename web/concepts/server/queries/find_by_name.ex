@@ -2,7 +2,7 @@ defmodule Unicorn.Server.FindByNameQuery do
   @moduledoc """
   Query to find a server by name
   """
-  use Unicorn.Web, :query
+  use Unicorn.Concept, :query
 
   def run(params) do
     params

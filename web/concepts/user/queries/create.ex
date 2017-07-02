@@ -1,10 +1,8 @@
-defmodule Unicorn.Server.CreateQuery do
-  @moduledoc """
-  Query to create a new server
-  """
+defmodule Unicorn.User.CreateQuery do
+
   use Unicorn.Concept, :query
 
-  alias Unicorn.Server.{
+  alias Unicorn.User.{
     CreateContract
   }
 
@@ -15,8 +13,7 @@ defmodule Unicorn.Server.CreateQuery do
   end
 
   def contract(params) do
-    CreateContract.make(%{
-      name: params[:name],
+    CreateContract.run(%{
       token: Ecto.UUID.generate
     })
   end

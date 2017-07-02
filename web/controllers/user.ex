@@ -1,7 +1,11 @@
-defmodule Unicorn.ServerController do
+defmodule Unicorn.UserController do
   use Unicorn.Web, :controller
 
-  alias Unicorn.Server.{
+  alias Unicorn.{
+    UserSerializer
+  }
+
+  alias Unicorn.User.{
     CreateAction,
     ShowAction
   }
@@ -23,21 +27,19 @@ defmodule Unicorn.ServerController do
   end
 
   def show(conn, params) do
-    case ShowAction.run(%{name: params["name"]}) do
+    case ShowAction.run(%{id: params["id"]}) do
         {:ok, result} ->
           conn
           |> put_status(:ok)
           |> render("show.json-api", data: result.model)
 
-        {:error, :find_unicorn, result} ->
+        {:error, :validate, result} ->
           conn
           |> put_status(:not_found)
           |> render(:errors, data: %{
-              id: 1,
               status: 404,
-              code: "not-found",
-              title: "Server not found",
-              detail: "Server #{params["name"]} is not available on this server" 
+              code: "resource-not-found",
+              detail: "User #{params["id"]} is not available on this server" 
             })
     end
   end
