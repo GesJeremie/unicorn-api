@@ -1,7 +1,6 @@
 defmodule Unicorn.Server.CreateAction do
-  @moduledoc """
-  Action to create a server
-  """
+
+
   use Unicorn.Concept.Action
 
   alias Unicorn.{

@@ -7,6 +7,8 @@ defmodule Unicorn.UserModel do
   schema "users" do
     field :token, :string
 
+    has_many :servers, Unicorn.ServerModel
+
     timestamps()
   end
 
