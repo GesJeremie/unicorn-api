@@ -1,14 +1,14 @@
 defmodule Unicorn.User.CreateAction do
 
-  use Unicorn.Concept, :action
+  use Unicorn.Concept.Action
 
   alias Unicorn.User.{
-    CreateValidation,
     CreateQuery
   }
 
   def run(params \\ %{}) do
-    with {:ok, params} <- Action.create(params, with: CreateQuery) do
+    with {:ok, params} <- model_create(params, with: CreateQuery) 
+    do
       {:ok, params}
     else
       {:error, method, params} ->

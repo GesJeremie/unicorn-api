@@ -2,7 +2,7 @@ defmodule Unicorn.Server.NameExistsQuery do
   @moduledoc """
   Query to check if a server name already exists
   """
-  use Unicorn.Concept, :query
+  use Unicorn.Concept.Query
 
   def run(params) do
     params

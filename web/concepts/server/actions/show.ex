@@ -2,7 +2,7 @@ defmodule Unicorn.Server.ShowAction do
   @moduledoc """
   Action to show a server
   """
-  use Unicorn.Concept, :action
+  use Unicorn.Concept.Action
 
   alias Unicorn.Server.{
     ShowValidation,

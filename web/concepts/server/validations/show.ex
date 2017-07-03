@@ -2,7 +2,7 @@ defmodule Unicorn.Server.ShowValidation do
   @moduledoc """
   Validation params of action show
   """
-  use Unicorn.Concept, :validation
+  use Unicorn.Concept.Validation
 
   schema "validation_show" do
     field :name, :string

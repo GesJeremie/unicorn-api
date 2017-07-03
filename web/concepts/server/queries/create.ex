@@ -2,7 +2,7 @@ defmodule Unicorn.Server.CreateQuery do
   @moduledoc """
   Query to create a new server
   """
-  use Unicorn.Concept, :query
+  use Unicorn.Concept.Query
 
   alias Unicorn.Server.{
     CreateContract

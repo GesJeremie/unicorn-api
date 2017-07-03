@@ -1,6 +1,6 @@
 defmodule Unicorn.User.CreateQuery do
 
-  use Unicorn.Concept, :query
+  use Unicorn.Concept.Query
 
   alias Unicorn.User.{
     CreateContract

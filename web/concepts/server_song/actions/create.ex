@@ -2,7 +2,7 @@ defmodule Unicorn.ServerSong.CreateAction do
   @moduledoc """
   Action to create a server song
   """
-  use Unicorn.Concept, :action
+  use Unicorn.Concept.Action
 
   alias Unicorn.{}
 

@@ -2,7 +2,7 @@ defmodule Unicorn.Server.CreateContract do
   @moduledoc """
   Contract when creating a server
   """
-  use Unicorn.Concept, :contract
+  use Unicorn.Concept.Contract
 
   def make(params \\ %{}) do
     %Unicorn.ServerModel{}

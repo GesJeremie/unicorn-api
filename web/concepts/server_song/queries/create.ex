@@ -2,7 +2,7 @@ defmodule Unicorn.ServerSong.CreateQuery do
   @moduledoc """
   Query to create a new server song
   """
-  use Unicorn.Concept, :query
+  use Unicorn.Concept.Query
 
   alias Unicorn.ServerSong.{
     CreateContract

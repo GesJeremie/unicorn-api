@@ -1,25 +1,16 @@
 defmodule Unicorn.User.ShowValidation do
 
-  use Unicorn.Concept, :validation
+  use Unicorn.Concept.Validation
 
-  @inputs %{
-    id: Ecto.UUID
-  }
-
-  def run(params) do
-    validation = validate(params)
-
-    if validation.valid? do
-      {:ok, validation}
-    else
-      {:error, validation}
-    end
+  defp cast_as do
+    %{
+      id: Ecto.UUID
+    }  
   end
 
-  defp validate(params \\ %{}) do
-    {%{}, @inputs}
-    |> cast(params, Map.keys(@inputs))
-    |> validate_required([:id])
+  defp validations(changeset) do
+    changeset
+    |> validate_required([:id])  
   end
 
 end

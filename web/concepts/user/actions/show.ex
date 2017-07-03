@@ -1,6 +1,6 @@
 defmodule Unicorn.User.ShowAction do
 
-  use Unicorn.Concept, :action
+  use Unicorn.Concept.Action
 
   alias Unicorn.User.{
     ShowValidation,
@@ -8,8 +8,8 @@ defmodule Unicorn.User.ShowAction do
   }
 
   def run(params \\ %{}) do
-    with  {:ok, params} <- Action.validate(params, with: ShowValidation),
-          {:ok, params} <- Action.show(params, with: ShowQuery) 
+    with  {:ok, params} <- validate(params, with: ShowValidation),
+          {:ok, params} <- model_find(params, with: ShowQuery) 
     do
       {:ok, params}
     else
