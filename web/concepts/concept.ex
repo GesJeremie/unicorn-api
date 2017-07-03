@@ -129,6 +129,40 @@ defmodule Unicorn.Concept.Action do
         end
       end
 
+      ###
+      # Taken from Phoenix scrub_params, replace empty strings
+      # values to nil.
+      # 
+      # Example: 
+      # 
+      # scrub_params((%{firstname: " ", lastname: "guess", attributes: %{zipcode: ""}})
+      # 
+      # -> %{firstname: nil, lastname: "guess", attributes: %{zipcode: nil}})
+      # 
+      ###
+      def scrub_params(params) do
+        scrub_param(params)
+      end
+
+      defp scrub_param(%{__struct__: mod} = struct) when is_atom(mod) do
+        struct
+      end
+      defp scrub_param(%{} = param) do
+        Enum.reduce(param, %{}, fn({k, v}, acc) ->
+          Map.put(acc, k, scrub_param(v))
+        end)
+      end
+      defp scrub_param(param) when is_list(param) do
+        Enum.map(param, &scrub_param/1)
+      end
+      defp scrub_param(param) do
+        if scrub?(param), do: nil, else: param
+      end
+
+      defp scrub?(" " <> rest), do: scrub?(rest)
+      defp scrub?(""), do: true
+      defp scrub?(_), do: false
+
       defoverridable [validate: 2, model_create: 2, model_find: 2]
 
     end

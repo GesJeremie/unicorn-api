@@ -39,7 +39,8 @@ defmodule Unicorn.Mixfile do
       {:cowboy, "~> 1.0"},
       {:cors_plug, "~> 1.2"},
       {:ja_serializer, "~> 0.12.0"},
-      {:httpoison, "~> 0.11.1"}
+      {:httpoison, "~> 0.11.1"},
+      {:slugger, "~> 0.2"}
     ]
   end
 

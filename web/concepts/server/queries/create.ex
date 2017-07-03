@@ -17,7 +17,7 @@ defmodule Unicorn.Server.CreateQuery do
   def contract(params) do
     CreateContract.make(%{
       name: params[:name],
-      token: Ecto.UUID.generate
+      user_id: params[:user_id]
     })
   end
 
