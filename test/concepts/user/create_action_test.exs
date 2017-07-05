@@ -1,9 +1,8 @@
-"""
-defmodule Unicorn.Server.CreateActionTest do
+defmodule Unicorn.User.CreateActionTest do
   use Unicorn.ConnCase, async: true
-  alias Unicorn.Server.CreateAction
+  alias Unicorn.User.CreateAction
 
-  test "create server" do
+  test "create user" do
     {success, result} = CreateAction.run()
 
     assert success == :ok
@@ -11,4 +10,3 @@ defmodule Unicorn.Server.CreateActionTest do
   end
 
 end
-"""

@@ -21,6 +21,9 @@ defmodule Unicorn.Web do
 
       import Ecto
       import Ecto.Query
+
+      @primary_key {:id, :binary_id, autogenerate: true}
+      @foreign_key_type Ecto.UUID
     end
   end
 

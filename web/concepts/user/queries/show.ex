@@ -2,8 +2,9 @@ defmodule Unicorn.User.ShowQuery do
 
   use Unicorn.Concept.Query
 
-  def run(params) do
-    Repo.get(Unicorn.UserModel, params[:id])
+  def run(options) do
+    Unicorn.User
+    |> Repo.get(options[:params][:id])
   end
 
 end

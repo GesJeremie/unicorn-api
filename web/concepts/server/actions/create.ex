@@ -1,16 +1,21 @@
 defmodule Unicorn.Server.CreateAction do
 
+  """
   use Unicorn.Concept.Action
 
   alias Unicorn.Server.{
     NameExistsQuery,
-    CreateQuery
+    UserExistsQuery,
+    CreateQuery,
+    CreateValidation
   }
 
   def run(params \\ %{}) do
     params = scrub_params(params)
 
-    with {:ok, params} <- fetch_or_create_name(params),
+    with {:ok, params} <- validate(params, with: CreateValidation),
+         {:ok, params} <- model_find(params, with: UserExistsQuery),
+         {:ok, params} <- fetch_or_create_name(params),
          {:ok, params} <- model_create(params, with: CreateQuery)
     do
       {:ok, params}
@@ -33,5 +38,6 @@ defmodule Unicorn.Server.CreateAction do
 
     {:ok, params}
   end
+  """
 
 end

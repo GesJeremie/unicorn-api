@@ -8,13 +8,15 @@ defmodule Unicorn.User.ShowAction do
   }
 
   def run(params \\ %{}) do
-    with  {:ok, params} <- validate(params, with: ShowValidation),
-          {:ok, params} <- model_find(params, with: ShowQuery) 
+    options = init_options(params)
+
+    with {:ok, options} <- validate(options, with: ShowValidation),
+         {:ok, options} <- model(:find, options, with: ShowQuery) 
     do
-      {:ok, params}
+      {:ok, options}
     else
-      {:error, method, params} ->
-        {:error, method, params}
+      {:error, method, options} ->
+        {:error, method, options}
     end
   end
 

@@ -6,16 +6,10 @@ defmodule Unicorn.User.CreateQuery do
     CreateContract
   }
 
-  def run(params) do
-    params
-    |> contract
+  def run(options) do
+    options
+    |> CreateContract.run
     |> Repo.insert
-  end
-
-  def contract(params) do
-    CreateContract.run(%{
-      token: Ecto.UUID.generate
-    })
   end
 
 end

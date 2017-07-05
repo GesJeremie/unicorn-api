@@ -15,6 +15,7 @@ defmodule Unicorn.Server.CreateQuery do
   end
 
   def contract(params) do
+    IO.inspect params
     CreateContract.make(%{
       name: params[:name],
       user_id: params[:user_id]

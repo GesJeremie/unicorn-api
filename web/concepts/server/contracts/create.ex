@@ -5,8 +5,9 @@ defmodule Unicorn.Server.CreateContract do
   use Unicorn.Concept.Contract
 
   def make(params \\ %{}) do
-    %Unicorn.ServerModel{}
-    |> cast(params, [:name, :token])
+    IO.inspect params
+    %Unicorn.Server{}
+    |> cast(params, [:name, :user_id])
     |> validate_required([:name, :token])
     |> unique_constraint(:name)
   end

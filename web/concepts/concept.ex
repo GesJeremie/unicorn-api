@@ -3,130 +3,59 @@ defmodule Unicorn.Concept.Action do
   defmacro __using__(_) do
     quote do
 
-      ###
-      # When you validate data inputs in your Action
-      # some business logic is involved such as:
-      # 
-      # 1. Perform the Validator
-      # 2. Handle the result returned by the Validator:
-      # 
-      #     When it's a success:
-      #       - Return {:ok, params}
-      #   
-      #     When it's an error:
-      #       - Set a new flag "validation" in the params to let the 
-      #         caller of the action know what went wrong
-      #       - Return {:error, :name_method, params}
-      # 
-      # That's a lot of boilerplate which could be abstracted
-      # in a single function. That's the job of validate/2.
-      # 
-      # Example:
-      # 
-      # with {:ok, params} <- validate(params, with: ShowValidation)
-      # do
-      #   # All good.
-      # else
-      #   {:error, :validate, params} ->
-      #     # Something went wrong, do something.
-      # end
-      # 
-      ###
-      defp validate(params, options) do
-        validator = options[:with]
+      defp init_options(params) do
+        %{params: scrub_params(params)}
+      end
 
-        case validator.run(params) do
+      defp validate(options, params) do
+        validator = params[:with]
+        error_key = params[:error_key] || :validate
+        option_key = params[:option_key] || :validation
+
+        case validator.run(options) do
           {:ok, validation} ->
-            {:ok, params}
+            {:ok, options}
           {:error, validation} ->
-            params = Map.merge(params, %{validation: validation})
-            {:error, :validate, params}
+            data = Map.put(%{}, option_key, validation)
+            options = Map.merge(options, data)
+            {:error, error_key, options}
         end
       end
 
-      ###
-      # When you create a new record for a model in your Action
-      # some business logic is involved such as:
-      # 
-      # 1. Perform the Query to create the new record
-      # 2. Handle the result returned by the Query:
-      #   
-      #   When it's a success:
-      #     - Set a flag "model" with the data of the record just created to let
-      #       the caller of the action know what's the new created model
-      #     - Return {:ok, params}
-      #     
-      #   When it's an error:
-      #     - Set a flag "contract" with the data of the failed contract to let
-      #     the caller of the action know why the contract failed
-      #     - Return {:error, :name_method, params}
-      #     
-      # That's a lot of boilerplate which could be abstracted
-      # in a single function. That's the job of model_create/2.
-      # 
-      # Example:
-      # 
-      # with {:ok, params} <- model_create(params, with: CreateQuery)
-      # do
-      #   # All good.
-      # else
-      #   {:error, :model_create, params} ->
-      #     # Something went wrong, do something.
-      # end
-      ###
-      defp model_create(params, options) do
-        query = options[:with]
+      defp model(:create, options, params) do
+        creator = params[:with]
+        error_key = params[:error_key] || :model_create
+        option_key = params[:option_key] || :model
+        option_error_key = params[:option_error_key] || :contract
 
-        case query.run(params) do
+        case creator.run(options) do
           {:ok, model} ->
-            params = Map.merge(params, %{model: model})
-            {:ok, params}
+            data = Map.put(%{}, option_key, model)
+            options = Map.merge(options, data)
+            {:ok, options}
 
           {:error, contract} ->
-            params = Map.merge(params, %{contract: contract})
-            {:error, :model_create, params}
+            data = Map.put(%{}, option_error_key, contract)
+            options = Map.merge(options, data)
+            {:error, :error_key, options}
         end
       end
 
-      ###
-      # When you try to find a record for a model in your Action
-      # some business logic is involved such as:
-      # 
-      # 1. Perform the Query to find the record/records
-      # 2. Handle the result returned by the Query:
-      #   
-      #   When we found the record/records:
-      #     - Set a flag "model" with the data of the record/records found to let
-      #       the caller of the action know about them
-      #     - Return {:ok, params}
-      #     
-      #   When no record/records found (nil):
-      #     - Return {:error, :name_method, params}
-      #     
-      # That's a lot of boilerplate which could be abstracted
-      # in a single function. That's the job of model_find/2.
-      # 
-      # Example:
-      # 
-      # with {:ok, params} <- model_find(params, with: FindByNameQuery)
-      # do
-      #   # All good.
-      # else
-      #   {:error, :model_find, params} ->
-      #     # Something went wrong, do something.
-      # end
-      ###
-      defp model_find(params, options) do
-        getter = options[:with]
+      defp model(:find, options, params) do
+        finder = params[:with]
+        error_key = params[:error_key] || :model_find
+        option_key = params[:option_key] || :model
 
-        case getter.run(params) do
+        case finder.run(options) do
           nil ->
-            {:error, :model_find, params}
+            {:error, error_key, options}
 
           model ->
-            params = Map.merge(params, %{model: model})
-            {:ok, params}
+            data = Map.put(%{}, option_key, model)
+            options = Map.merge(options, data)
+            {:ok, options}
         end
+
       end
 
       ###
@@ -163,8 +92,6 @@ defmodule Unicorn.Concept.Action do
       defp scrub?(""), do: true
       defp scrub?(_), do: false
 
-      defoverridable [validate: 2, model_create: 2, model_find: 2]
-
     end
   end
 
@@ -176,9 +103,29 @@ defmodule Unicorn.Concept.Validation do
       use Ecto.Schema
       import Ecto.Changeset
 
-      def run(params) do
-        validation = validate(params)
+      def run(options) do
+        params = params(options)
+        IO.inspect params
+        validation = 
+          {%{}, params_types()}
+          |> cast(params, Map.keys(params_types()))
+          |> rules
+          |> valid?
+      end
 
+      defp params(options) do
+        %{}
+      end
+
+      defp params_types do
+        %{}
+      end
+
+      defp rules(changeset) do
+        changeset
+      end
+
+      defp valid?(validation) do
         if validation.valid? do
           {:ok, validation}
         else
@@ -186,21 +133,7 @@ defmodule Unicorn.Concept.Validation do
         end
       end
 
-      defp cast_as do
-        %{}
-      end
-
-      defp validate(params \\ %{}) do
-        {%{}, cast_as()}
-        |> cast(params, Map.keys(cast_as()))
-        |> validations
-      end
-
-      defp validations(changeset) do
-        changeset
-      end
-
-      defoverridable [run: 1, cast_as: 0, validate: 0, validate: 1, validations: 1]
+      defoverridable [run: 1, params: 1, params_types: 0, rules: 1, valid?: 1]
     end
   end
 end

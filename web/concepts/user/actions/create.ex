@@ -7,7 +7,9 @@ defmodule Unicorn.User.CreateAction do
   }
 
   def run(params \\ %{}) do
-    with {:ok, params} <- model_create(params, with: CreateQuery) 
+    options = init_options(params)
+
+    with {:ok, params} <- model(:create, params, with: CreateQuery) 
     do
       {:ok, params}
     else

@@ -1,3 +1,4 @@
+"""
 defmodule Unicorn.ServerSong.CreateActionTest do
   use Unicorn.ConnCase, async: true
   alias Unicorn.ServerSong.CreateAction
@@ -16,3 +17,4 @@ defmodule Unicorn.ServerSong.CreateActionTest do
   end
 
 end
+"""

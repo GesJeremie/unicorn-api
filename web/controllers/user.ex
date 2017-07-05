@@ -18,7 +18,7 @@ defmodule Unicorn.UserController do
         |> put_status(:created)
         |> render("show.json-api", data: result.model)
 
-      {:error, :save, result} ->
+      {:error, :model_create, result} ->
         conn
         |> put_status(:unprocessable_entity)
         |> render(:errors, data: result.contract)
