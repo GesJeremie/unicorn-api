@@ -1,3 +1,5 @@
+> :skull: This project has been archived.
+
 # Unicorn
 
 To start your Phoenix app:
